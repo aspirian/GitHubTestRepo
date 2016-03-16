@@ -1,0 +1,80 @@
+<div class="container-fluid" ng-controller="SearchController" align="center">
+<div class="loader-container" ng-show="dataSearching"><img src="/images/loading.gif" class="loader_img"/></div>
+<div align="center" class="row-fluid container">
+<div class="span9 switch animate-show" ng-click="toggleFormControl()">Search Form</div>
+<div class="search-control animate-show" ng-show="searchControl">
+   	<div ng-show="error" class="alert alert-danger">{{error}}</div>
+    <form name="form" ng-submit="search()" role="form" id="searchform">
+        <div class="form-group" ng-class="{ 'has-error': form.searchItems.$dirty && form.searchItems.$error.required }">
+            <textarea name="searchItems" cols="50" rows="10" id="searchItems" class="form-control" ng-model="searchItems" required></textarea>
+            <span ng-show="form.username.$dirty && form.username.$error.required" class="help-block">Please enter Item number to Search</span>
+        </div>
+        <div><br></div>
+       
+        <div class="form-actions">
+            <button type="submit" ng-disabled="form.$invalid||dataSearching" class="btn btn-primary">Search Items</button>
+        	<input type="reset" ng-disabled="form.$invalid||dataSearching" class="btn btn-primary" />
+        </div>
+    </form>
+</div>
+</div>
+<!-- <div class="span9 switch" ng-click="showResult()">Search Result</div> -->
+<div class="result-control" ng-show="searchResult">
+<div class="response-message">
+<div ng-show="showResultMessage&&successResponse" align="center" class="alert alert-success">{{successResponse}}</div>
+<div ng-show="showResultMessage&&failureResponse" align="center" class="alert alert-danger">{{failureResponse}}</div>
+</div>
+<div class="table-responsive">
+<!-- <div class="pagination-control"><select ng-model="paginationLimit">
+  <option value="1">1</option>
+  <option value="2">2</option>
+  <option value="3">3</option>
+</select></div> -->
+ <table class="table table-striped table-hover result-table">
+                            <thead>
+        <tr>
+        	<th>
+                <span><!-- <input type="checkbox" ng-click="togglecheckboxselection(selectAllCheckBoxFlag)" ng-checked="selectAllCheckBoxFlag"/> --></span>
+            </th>
+            <th ng-click="sort('productId')">Id
+                <span class="glyphicon sort-icon" ng-show="sortKey=='productId'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+            </th>
+            <th ng-click="sort('materialNumber')">Material Name
+                <span class="glyphicon sort-icon" ng-show="sortKey=='materialNumber'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+            </th>
+            <th ng-click="sort('nikeType')">Nike Type
+                <span class="glyphicon sort-icon" ng-show="sortKey=='nikeType'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+            </th>
+            <th ng-click="sort('colorNumber')">Color Number
+                <span class="glyphicon sort-icon" ng-show="sortKey=='colorNumber'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+            </th>
+        </tr>
+    </thead>
+                            <tbody>
+                                <tr dir-paginate="product in searchResult.products|orderBy:sortKey:reverse|itemsPerPage:5">
+                                	<td><input type="checkbox" checklist-model="selectProduct.values" checklist-value="product.productId" /></td>
+                                    <td>{{product.productId}}</td>
+                                    <td>{{product.materialNumber}}</td>
+                                    <td>{{product.nikeType}}</td>
+                                    <td>{{product.colorNumber}}</td>
+                                </tr>
+                                <tr ng-hide="searchResult.products.length">
+                                	<td colspan="5" align="center">No records found</td>
+                                </tr>
+                            </tbody>
+                        </table> 
+                        
+                        <dir-pagination-controls
+        max-size="5"
+        direction-links="true"
+        boundary-links="true" >
+    </dir-pagination-controls>
+</div>
+<div class="form-actions">
+            <button type="button" ng-click="proceed()" class="btn btn-primary" ng-disabled="dataSearching">Proceed</button>
+</div>
+
+<div class="alert-info unmatched" ng-show=searchResult.unmatched.length> <b>Un-matched Ids: </b> <span ng-repeat ="id in searchResult.unmatched">{{id}}{{$last?'' : ','}}</span></div>
+
+</div>
+</div>

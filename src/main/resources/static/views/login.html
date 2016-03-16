@@ -1,0 +1,19 @@
+<div class="login-form" ng-controller="LoginController as vm">
+		<div class="head">
+			<img src="/images/gcs-logo.png" alt="gcs-logo"/>
+		</div>
+	<form name="vm.loginForm" ng-submit="vm.login()" >
+		<div ng-show="vm.error" class="alert alert-danger">{{vm.error}}</div>
+		<div ng-show="vm.message" class="alert alert-success">{{vm.message}}</div>
+		<li>
+			<input type="text" tabindex="1" name="username" style = "color : #F2F2F2;" class="text" placeholder="USERNAME" ng-model="vm.username" required/><a href="#" class=" icon user"></a>
+		</li>
+		<li>
+			<input type="password" tabindex="1" name="password" style = "color : #F2F2F2;" class="text" placeholder="PASSWORD" ng-model="vm.password" required /><a href="#" class=" icon lock"></a>
+		</li>
+		<div align="center">					
+			<input type="submit" style="float:none;" value="SIGN IN" tabindex="3" />
+			<div class="clear"> </div>
+		</div>
+	</form>	
+</div>
